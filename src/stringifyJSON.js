@@ -23,40 +23,40 @@
  //if
  //----------------------------------------------
 
-var resultArr = [];
+// var resultArr = [];
 
-function arrFunc(obj) {
-for (var x = 0; x < obj.length; x++) {
-  if(typeof(obj[x]) === 'string') {
-   obj[x] = `"${obj[x]}"`
-   continue
-  }
-  return resultArr.push(arrFunc(obj));
-  }
-  return obj;
-}
-
-
-var stringifyJSON = function(obj) {
-  if (typeof obj === 'boolean' || typeof obj === 'number') {
-    return `${obj}`
-  }
-  if (obj === null) {
-    return 'null';
-  }
-  if (typeof obj === 'string') {
-    return `"${obj}"`;
-  }
-  if (Array.isArray(obj) && obj.length === 0) {
-  return `[${obj}]`
-  }
-  if (Array.isArray(obj) && obj.length > 0) {
-    arrFunc(obj);
-    return `"${resultArr}"`
-  }
-  return obj;
-};
-var test = [8]
+// function arrFunc(obj) {
+// for (var x = 0; x < obj.length; x++) {
+//   if(typeof(obj[x]) === 'string') {
+//    obj[x] = `"${obj[x]}"`
+//    continue
+//   }
+//   return resultArr.push(arrFunc(obj));
+//   }
+//   return obj;
+// }
 
 
-console.log(stringifyJSON(test));
+// var stringifyJSON = function(obj) {
+//   if (typeof obj === 'boolean' || typeof obj === 'number') {
+//     return `${obj}`
+//   }
+//   if (obj === null) {
+//     return 'null';
+//   }
+//   if (typeof obj === 'string') {
+//     return `"${obj}"`;
+//   }
+//   if (Array.isArray(obj) && obj.length === 0) {
+//   return `[${obj}]`
+//   }
+//   if (Array.isArray(obj) && obj.length > 0) {
+//     arrFunc(obj);
+//     return `"${resultArr}"`
+//   }
+//   return obj;
+// };
+// var test = [8]
+
+
+// console.log(stringifyJSON(test));
