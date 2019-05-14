@@ -24,46 +24,59 @@
  //----------------------------------------------
 
 
-function arrFunc(obj) {
-var resultArr = [];
-for (var x = 0; x < obj.length; x++) {
-  if(typeof(obj[x]) === 'string') {
-   resultArr.push(`"${obj[x]}"`);
-  }
-  if(typeof(obj[x]) === 'number') {
-   resultArr.push(obj[x]);
-  }
-  if(Array.isArray(obj[x]) && obj[x].length > 0) {
-  return resultArr.concat(arrFunc(`[${obj[x]}]`));
-  }
-  if (Array.isArray(obj[x]) && obj[x].length === 0) {
-  resultArr.push(`[${obj[x]}]`);
-  }
-}
-return resultArr;
-};
-
-
 var stringifyJSON = function(obj) {
-  if (typeof obj === 'boolean' || typeof obj === 'number') {
-    return `${obj}`
-  }
-  if (obj === null) {
+  var result = '';
+  if (obj === undefined) {
+    return 'undefined';
+
+  } else if (obj === null) {
     return 'null';
   }
-  if (typeof obj === 'string') {
-    return `"${obj}"`;
+    else if (typeof obj === 'boolean') {
+      if (obj) {
+        result +='true';
+      } else {
+        result += 'false';
+        }
+
+  } else if (typeof obj === 'string') {
+    result += '"' + obj + '"';
+
+  } else if (typeof obj === 'number') {
+    result += obj.toString();
+
   }
-  if (Array.isArray(obj) && obj.length === 0) {
-  return `[${obj}]`
+  // for arrays
+  else if (Array.isArray(obj)) {
+    result += '[';
+    for (var i = 0; i < obj.length; i++) {
+      result += stringifyJSON(obj[i]);
+      if (i + 1 < obj.length) {
+        result += ',';
+      }
+    }
+    result += ']';
+  // for objects
+  } else if (obj && typeof obj === 'object') {
+    result += '{';
+    for (var key in obj) {
+      if (obj[key] !== undefined && typeof obj[key] !== 'function') {
+        result += '"' + key + '":';
+        result += stringifyJSON(obj[key]) + ',';
+      }
+    }
+    if (result.charAt(result.length - 1) === ',') {
+      result = result.slice(0, result.length - 1);
+    }
+    result += '}';
+
   }
-  if (Array.isArray(obj) && obj.length > 0) {
-    return `[${arrFunc(obj)}]`;
-  }
-  return obj;
+
+  return result;
 };
+stringifyJSON([8, 'hi'])
 
 
-// var ourTest = [8, 9, 10]
-// console.log(stringifyJSON(ourTest));
+
+
 
